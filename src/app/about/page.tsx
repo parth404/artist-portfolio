@@ -1,7 +1,5 @@
 import { groq } from "next-sanity";
 import { client } from "@/utils/configSanity";
-import { PortableText } from "@PortableText/react";
-import { richTextComponents } from "@/components/richTextXomponents";
 
 export default async function About() {
   const aboutQuery = groq`*[_type == "about"]{
