@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 // import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 function Header() {
@@ -13,9 +15,11 @@ function Header() {
 
   const [show, setShow] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isStudio, setIsStudio] = useState(false);
+  const path = usePathname();
 
   const controlNavbar = () => {
-    if (window.scrollY < lastScrollY) {
+    if (window.scrollY < lastScrollY || isStudio) {
       // if scroll down hide the navbar
       setShow(false);
     } else {
@@ -29,12 +33,19 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
-
     // cleanup function
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
+
+  useEffect(() => {
+    if (path.includes("studio")) {
+      setIsStudio(true);
+    } else {
+      setIsStudio(false);
+    }
+  }, [path]);
 
   return (
     <header
